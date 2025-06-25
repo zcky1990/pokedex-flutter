@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:new_pokedex/features/pokemon_detail/domain/entities/pokemon_entity.dart';
 import 'package:new_pokedex/features/landing/domain/entities/landing_pokemon_entity.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:new_pokedex/features/pokemon_detail/presentation/pages/sprite_loader/sprite_loader.dart';
-import 'package:new_pokedex/features/pokemon_detail/presentation/pages/pokemon_card/pokemon_card.dart';
+import 'package:new_pokedex/features/pokemon_detail/presentation/widgets/sprite_loader/sprite_loader.dart';
+import 'package:new_pokedex/features/pokemon_detail/presentation/widgets/pokemon_card/pokemon_card.dart';
 
 /// View for the Pokedex list page with Pokemon selection and display
 class PokemonDetailPageView extends StatelessWidget {
