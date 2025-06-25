@@ -1,4 +1,4 @@
-# mylearnapps
+# new_pokedex
 
 A new Flutter project.
 

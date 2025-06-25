@@ -1,6 +1,6 @@
 {
-    "name": "mylearnapps",
-    "short_name": "mylearnapps",
+    "name": "new_pokedex",
+    "short_name": "new_pokedex",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

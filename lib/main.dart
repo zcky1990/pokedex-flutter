@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/screens/pokedex_page/pokedex_page.dart';
-import 'package:pokedex/screens/landing_page/landing_page.dart';
-import 'dart:io'; // Import for HttpClient
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:pokedex/screens/pokedex_list_page/pokedex_list_page.dart';
+import 'package:provider/provider.dart';
+import 'package:new_pokedex/features/landing/presentation/providers/landing_provider.dart';
+import 'package:new_pokedex/features/pokemon_detail/presentation/providers/pokemon_detail_provider.dart';
+import 'dart:io';
+import 'package:new_pokedex/app/routes.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -14,18 +14,10 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter is initialized
-  try {
-    await dotenv.load(fileName: ".env"); // Load environment variables
-    String appEnv = dotenv.env['APP_ENV'] ?? 'production';
-    if (appEnv != 'PROD') {
-      print("not production env override ssl certificate");
-      HttpOverrides.global = MyHttpOverrides();
-    }
-  } catch (e) {
-    throw Exception('Error loading .env file: $e'); // Print error if any
-  }
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
+
   runApp(const MyApp());
 }
 
@@ -34,18 +26,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PokeDex',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      initialRoute: '/landing',
-      routes: {
-        '/landing': (context) => const LandingPage(),
-        '/pokedex_list': (context) => const PokedexListPage(),
-        '/pokedex': (context) => const PokedexPage(),
-      },
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => LandingProvider()),
+          ChangeNotifierProvider(create: (context) => PokemonDetailProvider()),
+        ],
+        builder: (context, child) {
+          return MaterialApp.router(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
+              useMaterial3: true,
+            ),
+            routerConfig: AppRouter.router,
+          );
+        });
   }
 }
