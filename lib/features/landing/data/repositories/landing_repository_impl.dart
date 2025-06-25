@@ -13,15 +13,15 @@ class LandingRepositoryImpl implements LandingRepository {
   @override
   Future<List<LandingPokemonEntity>> getPokemonList() async {
     // Try to get from cache first
-    // final cached = await cache.getPokemonList();
-    // print("mSUK SINi");
-    // if (cached != null && cached.isNotEmpty) {
-    //   print("masuk if");
-    //   return cached
-    //       .map((e) => LandingPokemonModel.fromJson(e))
-    //       .map((m) => LandingPokemonEntity(name: m.name, url: m.url))
-    //       .toList();
-    // }
+    final cached = await cache.getPokemonList();
+    print("mSUK SINi");
+    if (cached != null && cached.isNotEmpty) {
+      print("masuk if");
+      return cached
+          .map((e) => LandingPokemonModel.fromJson(e))
+          .map((m) => LandingPokemonEntity(name: m.name, url: m.url))
+          .toList();
+    }
 
     // If not in cache, fetch from API
     final apiList = await api.fetchPokemonList();

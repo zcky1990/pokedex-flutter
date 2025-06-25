@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'landing_page_view.dart';
 import 'package:provider/provider.dart';
-import 'package:new_pokedex/features/landing/presentation/providers/landing_provider.dart';
+import 'package:new_pokedex/features/landing/presentation/view_model/landing_provider.dart';
 import 'package:go_router/go_router.dart';
 
 class LandingPageState extends StatefulWidget {

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:new_pokedex/features/landing/presentation/providers/landing_provider.dart';
-import 'package:new_pokedex/features/pokemon_detail/presentation/providers/pokemon_detail_provider.dart';
 import 'dart:io';
 import 'package:new_pokedex/app/routes.dart';
+
+//DI provider
+import 'package:new_pokedex/features/landing/providers/landing_provider.dart';
+import 'package:new_pokedex/features/pokemon_detail/providers/pokemon_detail_provider.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -27,10 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => LandingProvider()),
-          ChangeNotifierProvider(create: (context) => PokemonDetailProvider()),
-        ],
+        providers: [...landingProviders, ...pokemonDetailProviders],
         builder: (context, child) {
           return MaterialApp.router(
             title: 'Flutter Demo',

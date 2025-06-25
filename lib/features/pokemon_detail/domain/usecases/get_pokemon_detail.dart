@@ -5,7 +5,7 @@ import 'package:new_pokedex/features/landing/domain/entities/landing_pokemon_ent
 class GetPokemonDetail {
   final PokemonDetailRepository repository;
 
-  GetPokemonDetail(this.repository);
+  GetPokemonDetail({required this.repository});
 
   Future<PokemonEntity?> fetchPokemonDetail(String url) async {
     return await repository.getPokemonDetail(url);

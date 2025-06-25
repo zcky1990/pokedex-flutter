@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_pokedex/features/landing/domain/entities/landing_pokemon_entity.dart';
 import 'package:new_pokedex/features/pokemon_detail/domain/entities/pokemon_entity.dart';
 import 'package:new_pokedex/features/pokemon_detail/domain/usecases/get_pokemon_detail.dart';
-import 'package:new_pokedex/features/pokemon_detail/data/repositories/pokemon_detail_repository_impl.dart';
-import 'package:new_pokedex/features/pokemon_detail/data/datasources/local/pokemon_detail_cache.dart';
-import 'package:new_pokedex/features/pokemon_detail/data/datasources/remote/pokemon_detail_api.dart';
 
-class PokemonDetailProvider extends ChangeNotifier {
+class PokemonDetailViewModel extends ChangeNotifier {
   static const Map<String, MaterialColor> _pokemonTypeColors = {
     'normal': Colors.grey,
     'fire': Colors.red,
@@ -40,13 +37,9 @@ class PokemonDetailProvider extends ChangeNotifier {
   Color? get background => _background;
   String? get error => _error;
 
-  GetPokemonDetail? _getPokemonDetail;
+  GetPokemonDetail? getPokemonDetail;
 
-  PokemonDetailProvider() {
-    print("pokedex provider initialize");
-    _getPokemonDetail = GetPokemonDetail(PokemonDetailRepositoryImpl(
-        api: PokemonDetailApi(), cache: PokemonDetailCache()));
-  }
+  PokemonDetailViewModel({required this.getPokemonDetail});
 
   MaterialColor getColorBaseOnType(String type) {
     return _pokemonTypeColors[type.toLowerCase()] ?? Colors.blueGrey;
@@ -80,7 +73,7 @@ class PokemonDetailProvider extends ChangeNotifier {
     _setLoading(true);
     _clearError();
     try {
-      _selectedPokemon = await _getPokemonDetail!.fetchPokemonDetail(name);
+      _selectedPokemon = await getPokemonDetail!.fetchPokemonDetail(name);
     } catch (e) {
       _error = e.toString();
     }
@@ -101,7 +94,7 @@ class PokemonDetailProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _pokemonList = await _getPokemonDetail!.fetchPokemonList();
+      _pokemonList = await getPokemonDetail!.fetchPokemonList();
     } catch (e) {
       _error = e.toString();
     }
